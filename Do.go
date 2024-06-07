@@ -9,6 +9,7 @@ import (
 	"encoding/json"
 	"io/ioutil"
 	"os"
+	"sort"
 )
 
 type paitent struct {
@@ -36,6 +37,10 @@ func Do(src string, tgt string) error {
 		res = append(res, p)
 
 	}
+	// отсортируем по годам
+	sort.Slice(res[:], func(i, j int) bool {
+		return res[i].Age < res[j].Age
+	})
 
 	f, err = ioutil.TempFile("./", tgt)
 	if err != nil {
